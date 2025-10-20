@@ -23,7 +23,8 @@ class ImageAnalysisResult(BaseModel):
 model = init_chat_model("google_genai:gemini-2.5-pro")
 structured_model = model.with_structured_output(ImageAnalysisResult)
 
-def analyze_image(image_url: str):
+
+def analyse_image(image_url: str):
     message = {
         "role": "user",
         "content": [
@@ -42,5 +43,6 @@ def analyze_image(image_url: str):
 
 
 if __name__ == "__main__":
-    analysis_result = analyze_image("https://images.hindustantimes.com/auto/img/2025/03/18/1600x900/Delhi_Traffic_Violation_1713763214287_1742269490008.jpg")
+    analysis_result = analyse_image("https://images.hindustantimes.com/auto/img/2025/03/18/1600x900/Delhi_Traffic_Violation_1713763214287_1742269490008.jpg")
+
     print(analysis_result.model_dump_json(indent=2))
