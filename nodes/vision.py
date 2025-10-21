@@ -7,6 +7,8 @@ try:
     load_dotenv()
 except ImportError:
     pass
+from config import VISION_MODEL
+from utils.lazy import structured_chat_model
 
 class ImageAnalysisResult(BaseModel):
     """Analyse a traffic violation image and extract relevant details."""
@@ -20,8 +22,8 @@ class ImageAnalysisResult(BaseModel):
     confidence_score: float = Field(description="Confidence score of the entire analysis, ranging from 0 to 1.")
 
 
-model = init_chat_model("google_genai:gemini-2.5-pro")
-structured_model = model.with_structured_output(ImageAnalysisResult)
+def get_structured_model():
+    return structured_chat_model(VISION_MODEL, ImageAnalysisResult)
 
 
 def analyse_image(image_url: str):
@@ -38,8 +40,7 @@ def analyse_image(image_url: str):
             },
         ],
     }
-
-    return structured_model.invoke([message])
+    return get_structured_model().invoke([message])
 
 
 if __name__ == "__main__":

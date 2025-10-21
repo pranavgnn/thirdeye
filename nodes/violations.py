@@ -1,10 +1,13 @@
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.chat_models import init_chat_model
 from pydantic import BaseModel, Field
+from functools import lru_cache
 import json
 from .vision import ImageAnalysisResult
+from config import GENAI_EMBEDDINGS_MODEL, VIOLATION_VALIDATOR_MODEL
+from utils.lazy import structured_chat_model
 
 try:
     from dotenv import load_dotenv
@@ -134,7 +137,6 @@ DETECTABLE_VIOLATIONS = [
 
 
 def create_violation_document(violation: dict) -> Document:
-    """Create a Document with violation text and complete JSON as metadata."""
     text_content = (
         f"{violation['name']} — {violation['description']} "
         f"Category: {violation['category']}. "
@@ -153,15 +155,21 @@ def create_violation_document(violation: dict) -> Document:
     
     return Document(page_content=text_content, metadata=metadata)
 
+_VECTOR_STORE: InMemoryVectorStore | None = None
 
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
-vector_store = InMemoryVectorStore(embeddings)
-ids = vector_store.add_documents(documents=[create_violation_document(v) for v in DETECTABLE_VIOLATIONS])
+def get_vector_store() -> InMemoryVectorStore:
+    global _VECTOR_STORE
+    if _VECTOR_STORE is not None:
+        return _VECTOR_STORE
+    emb = GoogleGenerativeAIEmbeddings(model=GENAI_EMBEDDINGS_MODEL)
+    store = InMemoryVectorStore(emb)
+    store.add_documents(documents=[create_violation_document(v) for v in DETECTABLE_VIOLATIONS])
+    _VECTOR_STORE = store
+    return _VECTOR_STORE
 
 
 class ViolationsResult(BaseModel):
-    """Model to represent matched violation details."""
 
     id: int = Field(description="Unique identifier for the violation.")
     name: str = Field(description="Name of the traffic violation.")
@@ -170,19 +178,16 @@ class ViolationsResult(BaseModel):
     fine_amount: int = Field(description="Fine amount associated with the violation in INR.")
     section: str = Field(description="Legal section under which the violation falls.")
 
-
 class ValidationResult(BaseModel):
-    """Model to represent validation results for violation matching."""
 
     is_valid: bool = Field(description="Indicates if the given violation is applicable for the given scenario.")
 
-
-model = init_chat_model("google_genai:gemini-2.5-flash")
-structured_model = model.with_structured_output(ValidationResult)
+def get_validator():
+    return structured_chat_model(VIOLATION_VALIDATOR_MODEL, ValidationResult)
 
 
 def validate_violation(violation_data: ViolationsResult, analysis_result: ImageAnalysisResult) -> bool:
-    return structured_model.invoke([
+    return get_validator().invoke([
         {
             "role": "system",
             "content": f"You are an expert traffic violation validator. Given the violation name '{violation_data.name}' and the analysis result, determine if the violation is valid."
@@ -195,17 +200,14 @@ def validate_violation(violation_data: ViolationsResult, analysis_result: ImageA
      
 
 def match_violations(analysis_result: ImageAnalysisResult) -> list[ViolationsResult]:
-    """
-    Match detected violations with the violation database.
-    Returns a list of violation dictionaries with complete data.
-    """
     if not analysis_result.vehicle_detected or not analysis_result.is_violation or analysis_result.violations is None:
         return []
     
     matched_violations = []
     
+    store = get_vector_store()
     for violation in analysis_result.violations:
-        for doc in vector_store.similarity_search(violation, k=2):
+        for doc in store.similarity_search(violation, k=2):
             violation_data = ViolationsResult.model_validate(json.loads(doc.metadata["violation_data"]))
 
             if violation_data not in matched_violations and validate_violation(violation_data, analysis_result):

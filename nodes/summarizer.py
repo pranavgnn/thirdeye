@@ -3,16 +3,8 @@ from pydantic import BaseModel
 
 from .violations import ViolationsResult
 from .vision import ImageAnalysisResult
-
-
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
-
-
-model = init_chat_model("google_genai:gemini-2.5-flash-lite")
+from config import SUMMARY_MODEL
+from utils.lazy import chat_model
 
 
 class SummaryInput(BaseModel):
@@ -21,7 +13,7 @@ class SummaryInput(BaseModel):
 
 
 def summarize(data) -> str:
-    response = model.invoke([
+    response = chat_model(SUMMARY_MODEL).invoke([
         {
             "role": "system",
             "content": """You are an AI assistant summarizing traffic violation reports for an Indian traffic enforcement system.
