@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Traffic Violation Analyser — Prototype</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            color: #111;
+            background: #fff
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 1rem
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 .5rem
+        }
+
+        .muted {
+            color: #555
+        }
+
+        ul {
+            padding-left: 1.2rem
+        }
+
+        a {
+            color: #0b5fff;
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .card {
+            background: #f7f7f7;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .warning {
+            background: #fff4e5;
+            border: 1px solid #ffd599
+        }
+    </style>
+    <meta name="robots" content="noindex,nofollow" />
+</head>
+
+<body>
+    <main>
+        <h1>Traffic Violation Analyser — Prototype</h1>
+        <p class="muted">University project demo. Not a real product.</p>
+
+        <div class="card warning" role="note" aria-label="Prototype notice">
+            <strong>Important:</strong> This is a university project prototype for research/learning purposes. Outputs
+            may be inaccurate or incomplete and must not be used for real enforcement.
+        </div>
+
+        <h2>What it does</h2>
+        <ul>
+            <li>You send a traffic photo via WhatsApp.</li>
+            <li>An agentic AI pipeline analyzes the image, classifies potential violations, and drafts a report.</li>
+            <li>It decides whether automatic verification is confident or manual review is required.</li>
+            <li>You receive a short reply summarizing the findings.</li>
+        </ul>
+
+        <h2>How to try</h2>
+        <ul>
+            <li>Send a road-traffic image to the configured WhatsApp number (demo environment only).</li>
+            <li>Wait for the automated response summarizing detected violations (if any).</li>
+        </ul>
+
+        <h2>Data & Privacy</h2>
+        <p>We process images only to generate the response. See our <a href="/privacy">Privacy Policy</a> for details.
+        </p>
+
+        <h2>Disclaimer</h2>
+        <p>This demo may produce mistakes. It’s not an official service and should not be relied upon for legal or
+            safety decisions.</p>
+    </main>
+</body>
+
+</html>
