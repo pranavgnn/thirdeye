@@ -5,4 +5,5 @@ langchain-huggingface==1.0.0
 numpy==2.3.4
 python-dotenv==1.1.1
 python-multipart==0.0.20
+supabase==2.22.1
 uvicorn==0.38.0

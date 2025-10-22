@@ -52,10 +52,11 @@ def download_media_data_uri(media_id: str) -> str:
 
 
 def handle_image(wa_id: str, media_id: str):
-    from main import chain
+    from main import build_chain
 
     try:
         data_uri = download_media_data_uri(media_id)
+        chain = build_chain(reporter_phone=wa_id, reported_image=data_uri)
         result = chain.invoke(data_uri)
         send_whatsapp_text(wa_id, str(result))
     except Exception:

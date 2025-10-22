@@ -15,6 +15,7 @@ class ImageAnalysisResult(BaseModel):
     vehicle_detected: bool = Field(description="Indicates if a vehicle is detected in the image.")
     is_violation: Optional[bool] = Field(description="Indicates if a traffic violation is present in the image, if vehicle is present.")
     license_plate: Optional[str] = Field(description="The license plate number of the vehicle involved in the violation in all caps and no spaces, if detectable.")
+    title: Optional[str] = Field(description="A short title for the analysis result.")
     short_description: Optional[str] = Field(description="A brief description of the traffic violation(s), if any.")
     detailed_description: Optional[str] = Field(description="A detailed description of the traffic violation(s), if any.")
     violations: Optional[list[str]] = Field(description="A list of specific traffic violations detected in the image, if any.")
