@@ -15,7 +15,3 @@ chain = (
     | RunnableParallel(analysis=RunnablePassthrough(), violations=RunnableLambda(match_violations))
     | RunnableLambda(summarize)
 )
-
-# res = chain.invoke("https://images.hindustantimes.com/auto/img/2025/03/18/1600x900/Delhi_Traffic_Violation_1713763214287_1742269490008.jpg")
-
-# print(res)

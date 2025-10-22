@@ -7,7 +7,6 @@ WABA_VERIFY_TOKEN = os.getenv("WABA_VERIFY_TOKEN")
 
 
 def verify_webhook_token(func):
-    """Decorator to verify WhatsApp webhook token"""
     @wraps(func)
     async def wrapper(request: Request, *args, **kwargs):
         params = dict(request.query_params)

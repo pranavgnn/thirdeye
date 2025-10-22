@@ -11,7 +11,6 @@ from config import VISION_MODEL
 from utils.lazy import structured_chat_model
 
 class ImageAnalysisResult(BaseModel):
-    """Analyse a traffic violation image and extract relevant details."""
 
     vehicle_detected: bool = Field(description="Indicates if a vehicle is detected in the image.")
     is_violation: Optional[bool] = Field(description="Indicates if a traffic violation is present in the image, if vehicle is present.")

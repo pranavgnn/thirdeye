@@ -6,13 +6,13 @@ from utils.whatsapp import handle_image
 router = APIRouter()
 
 
-@router.get("/webhook/whatsapp", response_class=PlainTextResponse)
+@router.get("", response_class=PlainTextResponse)
 @verify_webhook_token
 async def verify_webhook(request: Request):
     pass
 
 
-@router.post("/webhook/whatsapp")
+@router.post("")
 async def receive_webhook(request: Request, background_tasks: BackgroundTasks):
     body = await request.json()
     
