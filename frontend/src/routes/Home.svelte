@@ -1,89 +1,141 @@
-<main>
-  <h1>Traffic Violation Analyser — Prototype</h1>
-  <p class="muted">University Research Project • Not a Commercial Product</p>
+<script lang="ts">
+  import Card from "@/components/ui/Card.svelte";
+  import CardHeader from "@/components/ui/CardHeader.svelte";
+  import CardTitle from "@/components/ui/CardTitle.svelte";
+  import CardDescription from "@/components/ui/CardDescription.svelte";
+  import CardContent from "@/components/ui/CardContent.svelte";
+  import Alert from "@/components/ui/Alert.svelte";
+  import AlertDescription from "@/components/ui/AlertDescription.svelte";
+  import Badge from "@/components/ui/Badge.svelte";
+</script>
 
-  <div class="card warning" role="note" aria-label="Prototype notice">
-    <strong>Important:</strong> This is a university research prototype for educational and research purposes only. Outputs may be inaccurate or incomplete and must not be used for real enforcement, legal proceedings, or commercial purposes.
+<main class="min-h-screen bg-linear-to-b from-background to-secondary/20">
+  <div class="container max-w-4xl mx-auto py-16 px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold tracking-tight mb-3">
+        Traffic Violation Analyzer
+      </h1>
+      <p class="text-lg text-muted-foreground">
+        AI-powered traffic violation detection via WhatsApp
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      <Alert
+        class="border-amber-200 bg-amber-50 dark:bg-amber-950/50 dark:border-amber-900"
+      >
+        <AlertDescription class="text-amber-900 dark:text-amber-200">
+          <strong>Notice:</strong> This service is for educational purposes. All
+          reports require manual verification by authorities.
+        </AlertDescription>
+      </Alert>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>How It Works</CardTitle>
+          <CardDescription>Simple three-step process</CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold shrink-0"
+            >
+              1
+            </div>
+            <div>
+              <h3 class="font-medium mb-1">Send Photo via WhatsApp</h3>
+              <p class="text-sm text-muted-foreground">
+                Submit an image of a traffic violation to our WhatsApp bot
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold shrink-0"
+            >
+              2
+            </div>
+            <div>
+              <h3 class="font-medium mb-1">AI Analysis</h3>
+              <p class="text-sm text-muted-foreground">
+                Our system analyzes the image using Google Gemini Vision
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold shrink-0"
+            >
+              3
+            </div>
+            <div>
+              <h3 class="font-medium mb-1">Receive Report</h3>
+              <p class="text-sm text-muted-foreground">
+                Get an instant summary with violation details and evidence
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Features</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
+              <Badge variant="outline">AI</Badge>
+              <span class="text-sm">Computer vision analysis</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
+              <Badge variant="outline">Fast</Badge>
+              <span class="text-sm">Instant WhatsApp responses</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
+              <Badge variant="outline">Secure</Badge>
+              <span class="text-sm">End-to-end encrypted</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
+              <Badge variant="outline">Private</Badge>
+              <span class="text-sm">Data protection compliant</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Meta Business Verification</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-3">
+          <p class="text-sm text-muted-foreground">
+            This WhatsApp Business Account is verified by Meta and complies with
+            their terms of service.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <Badge>WhatsApp Business API</Badge>
+            <Badge>Meta Verified</Badge>
+            <Badge>GDPR Compliant</Badge>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div class="flex justify-center gap-4 pt-4">
+        <a
+          href="/privacy"
+          class="text-sm font-medium text-primary hover:underline"
+        >
+          Privacy Policy
+        </a>
+        <span class="text-muted-foreground">•</span>
+        <a
+          href="/reports"
+          class="text-sm font-medium text-primary hover:underline"
+        >
+          View Reports
+        </a>
+      </div>
+    </div>
   </div>
-
-  <h2>About This Project</h2>
-  <p>This is an academic research prototype developed as part of a university project to explore AI-based traffic analysis. It demonstrates automated image classification and agentic workflow concepts in a controlled demo environment.</p>
-  <ul>
-    <li><strong>Type:</strong> Non-commercial academic research project</li>
-    <li><strong>Purpose:</strong> Educational demonstration and research evaluation</li>
-    <li><strong>Status:</strong> Prototype / Proof of concept</li>
-    <li><strong>Audience:</strong> Researchers, educators, project reviewers, and authorized test users</li>
-  </ul>
-
-  <h2>How It Works</h2>
-  <ul>
-    <li>Users send traffic images via WhatsApp with prior opt-in consent</li>
-    <li>An AI pipeline analyzes the image and classifies potential violations</li>
-    <li>The system determines confidence levels and suggests verification requirements</li>
-    <li>Users receive an automated summary reply</li>
-  </ul>
-
-  <h2>Opt-In & User Consent</h2>
-  <p>Use of this service requires explicit opt-in consent. By sending an image, users confirm:</p>
-  <ul>
-    <li>They have provided their phone number voluntarily for this demo</li>
-    <li>They consent to receive automated replies from this research prototype</li>
-    <li>They understand this is an academic project with no legal authority</li>
-    <li>They may opt out at any time by blocking the number or requesting removal</li>
-  </ul>
-
-  <h2>Contact & Support</h2>
-  <p>For questions or opt-out requests, contact the project owner through the repository or affiliated university channels.</p>
-
-  <h2>Links</h2>
-  <ul>
-    <li><a href="/privacy">Privacy Policy</a></li>
-    <li><a href="/reports">View Reports (Debug)</a></li>
-  </ul>
 </main>
-
-<style>
-  main {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-    margin: 0 0 1rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-    margin: 1.5rem 0 .5rem;
-  }
-
-  .muted {
-    color: #555;
-  }
-
-  ul {
-    padding-left: 1.2rem;
-  }
-
-  a {
-    color: #0b5fff;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
-  .card {
-    background: #f7f7f7;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
-    padding: 1rem;
-  }
-
-  .warning {
-    background: #fff4e5;
-    border: 1px solid #ffd599;
-  }
-</style>
