@@ -46,12 +46,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        working-directory: ./frontend
-        run: pnpm install --frozen-lockfile
+        run: cd frontend && pnpm install --frozen-lockfile
 
       - name: Build frontend
-        working-directory: ./frontend
-        run: pnpm build
+        run: cd frontend && pnpm build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -61,8 +59,8 @@ jobs:
           retention-days: 7
 
       - name: Check build output
-        working-directory: ./frontend
         run: |
+          cd frontend
           echo "Build completed successfully!"
           echo "Build artifacts:"
           ls -lah dist/
