@@ -20,7 +20,7 @@
         </div>
         <p class="text-muted-foreground leading-relaxed">
           This privacy policy explains how we collect, use, and protect your data when you interact
-          with our Traffic Violation Analyzer service via WhatsApp.
+          with our ThirdEye service via WhatsApp.
         </p>
       </section>
 

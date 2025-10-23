@@ -12,7 +12,7 @@
         <span>AI-Powered Analysis</span>
       </div>
       <h1 class="text-6xl font-bold tracking-tight mb-4">
-        Traffic Violation Analyzer
+        ThirdEye
       </h1>
       <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
         Detect and report traffic violations instantly using AI-powered image analysis via WhatsApp

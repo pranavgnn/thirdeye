@@ -1,7 +1,7 @@
 .env
-*.jpg
-*.jpeg
-*.png
+test-*.jpg
+test-*.jpeg
+test-*.png
 __pycache__
 .vercel
 .venv
