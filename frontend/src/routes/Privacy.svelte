@@ -1,6 +1,14 @@
 <script lang="ts">
   import Button from "@/components/ui/Button.svelte";
-  import { ArrowLeft, Shield, Database, Lock, Users, FileText, Mail } from "lucide-svelte";
+  import {
+    ArrowLeft,
+    Shield,
+    Database,
+    Lock,
+    Users,
+    FileText,
+    Mail,
+  } from "lucide-svelte";
 </script>
 
 <main class="min-h-screen py-16">
@@ -19,8 +27,8 @@
           <h2 class="text-2xl font-bold">Overview</h2>
         </div>
         <p class="text-muted-foreground leading-relaxed">
-          This privacy policy explains how we collect, use, and protect your data when you interact
-          with our ThirdEye service via WhatsApp.
+          This privacy policy explains how we collect, use, and protect your
+          data when you interact with our ThirdEye service via WhatsApp.
         </p>
       </section>
 
@@ -31,7 +39,9 @@
           </div>
           <h2 class="text-2xl font-bold">Information We Collect</h2>
         </div>
-        <p class="text-muted-foreground mb-3">When you use our service, we collect:</p>
+        <p class="text-muted-foreground mb-3">
+          When you use our service, we collect:
+        </p>
         <ul class="space-y-2 text-muted-foreground">
           <li class="flex items-start gap-2">
             <span class="text-primary mt-1">•</span>
@@ -88,8 +98,9 @@
           <h2 class="text-2xl font-bold">Data Storage & Security</h2>
         </div>
         <p class="text-muted-foreground leading-relaxed">
-          Your data is stored securely in our database with industry-standard encryption.
-          We implement appropriate technical and organizational measures to protect your information.
+          Your data is stored securely in our database with industry-standard
+          encryption. We implement appropriate technical and organizational
+          measures to protect your information.
         </p>
       </section>
 
@@ -100,11 +111,15 @@
           </div>
           <h2 class="text-2xl font-bold">Third-Party Services</h2>
         </div>
-        <p class="text-muted-foreground mb-3">We use the following third-party services:</p>
+        <p class="text-muted-foreground mb-3">
+          We use the following third-party services:
+        </p>
         <div class="grid gap-3">
           <div class="p-4 rounded-lg border bg-card">
             <p class="font-semibold mb-1">WhatsApp Business API</p>
-            <p class="text-sm text-muted-foreground">For messaging infrastructure</p>
+            <p class="text-sm text-muted-foreground">
+              For messaging infrastructure
+            </p>
           </div>
           <div class="p-4 rounded-lg border bg-card">
             <p class="font-semibold mb-1">Google Gemini</p>
@@ -116,7 +131,8 @@
           </div>
         </div>
         <p class="text-muted-foreground mt-4">
-          These services have their own privacy policies and we recommend reviewing them.
+          These services have their own privacy policies and we recommend
+          reviewing them.
         </p>
       </section>
 
@@ -156,8 +172,8 @@
           <h2 class="text-2xl font-bold">Contact Us</h2>
         </div>
         <p class="text-muted-foreground leading-relaxed">
-          For privacy-related inquiries or to exercise your rights, please contact us through
-          the repository or affiliated university channels.
+          For privacy-related inquiries or to exercise your rights, please
+          contact us through the repository or affiliated university channels.
         </p>
       </section>
     </div>
