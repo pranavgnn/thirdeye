@@ -1,123 +1,173 @@
 <script lang="ts">
-  import Card from "@/components/ui/Card.svelte";
-  import CardHeader from "@/components/ui/CardHeader.svelte";
-  import CardTitle from "@/components/ui/CardTitle.svelte";
-  import CardContent from "@/components/ui/CardContent.svelte";
+  import Button from "@/components/ui/Button.svelte";
+  import { ArrowLeft, Shield, Database, Lock, Users, FileText, Mail } from "lucide-svelte";
 </script>
 
-<main class="min-h-screen bg-linear-to-b from-background to-secondary/20 py-16">
-  <div class="container max-w-3xl mx-auto px-4">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold tracking-tight mb-3">Privacy Policy</h1>
-      <p class="text-muted-foreground">Last updated: October 2025</p>
+<main class="min-h-screen py-16">
+  <div class="container max-w-4xl mx-auto px-4">
+    <div class="mb-12">
+      <h1 class="text-5xl font-bold tracking-tight mb-3">Privacy Policy</h1>
+      <p class="text-lg text-muted-foreground">Last updated: October 2025</p>
     </div>
 
-    <div class="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Overview</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>
-            This privacy policy explains how we collect, use, and protect your
-            data when you interact with our Traffic Violation Analyzer service
-            via WhatsApp.
-          </p>
-        </CardContent>
-      </Card>
+    <div class="space-y-8">
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <FileText size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Overview</h2>
+        </div>
+        <p class="text-muted-foreground leading-relaxed">
+          This privacy policy explains how we collect, use, and protect your data when you interact
+          with our Traffic Violation Analyzer service via WhatsApp.
+        </p>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Information We Collect</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>When you use our service, we collect:</p>
-          <ul class="list-disc pl-5 space-y-2">
-            <li>Your WhatsApp phone number</li>
-            <li>Images you send to us for analysis</li>
-            <li>AI-generated analysis reports</li>
-            <li>Timestamps of interactions</li>
-          </ul>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Database size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Information We Collect</h2>
+        </div>
+        <p class="text-muted-foreground mb-3">When you use our service, we collect:</p>
+        <ul class="space-y-2 text-muted-foreground">
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Your WhatsApp phone number</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Images you send to us for analysis</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>AI-generated analysis reports</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Timestamps of interactions</span>
+          </li>
+        </ul>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>How We Use Your Information</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>We use your information to:</p>
-          <ul class="list-disc pl-5 space-y-2">
-            <li>Analyze traffic violation images using AI</li>
-            <li>Send you automated analysis reports</li>
-            <li>Store records for research and improvement purposes</li>
-            <li>Comply with legal requirements</li>
-          </ul>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Users size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">How We Use Your Information</h2>
+        </div>
+        <p class="text-muted-foreground mb-3">We use your information to:</p>
+        <ul class="space-y-2 text-muted-foreground">
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Analyze traffic violation images using AI</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Send you automated analysis reports</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Store records for research and improvement purposes</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Comply with legal requirements</span>
+          </li>
+        </ul>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Data Storage & Security</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>
-            Your data is stored securely in our database with industry-standard
-            encryption. We implement appropriate technical and organizational
-            measures to protect your information.
-          </p>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Lock size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Data Storage & Security</h2>
+        </div>
+        <p class="text-muted-foreground leading-relaxed">
+          Your data is stored securely in our database with industry-standard encryption.
+          We implement appropriate technical and organizational measures to protect your information.
+        </p>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Third-Party Services</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>We use the following third-party services:</p>
-          <ul class="list-disc pl-5 space-y-2">
-            <li><strong>WhatsApp Business API</strong> - For messaging</li>
-            <li><strong>Google Gemini</strong> - For AI image analysis</li>
-            <li><strong>Supabase</strong> - For data storage</li>
-          </ul>
-          <p class="mt-3">
-            These services have their own privacy policies and we recommend
-            reviewing them.
-          </p>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Shield size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Third-Party Services</h2>
+        </div>
+        <p class="text-muted-foreground mb-3">We use the following third-party services:</p>
+        <div class="grid gap-3">
+          <div class="p-4 rounded-lg border bg-card">
+            <p class="font-semibold mb-1">WhatsApp Business API</p>
+            <p class="text-sm text-muted-foreground">For messaging infrastructure</p>
+          </div>
+          <div class="p-4 rounded-lg border bg-card">
+            <p class="font-semibold mb-1">Google Gemini</p>
+            <p class="text-sm text-muted-foreground">For AI image analysis</p>
+          </div>
+          <div class="p-4 rounded-lg border bg-card">
+            <p class="font-semibold mb-1">Supabase</p>
+            <p class="text-sm text-muted-foreground">For secure data storage</p>
+          </div>
+        </div>
+        <p class="text-muted-foreground mt-4">
+          These services have their own privacy policies and we recommend reviewing them.
+        </p>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Rights</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground space-y-3">
-          <p>You have the right to:</p>
-          <ul class="list-disc pl-5 space-y-2">
-            <li>Access your personal data</li>
-            <li>Request deletion of your data</li>
-            <li>Opt-out of the service at any time</li>
-            <li>Request corrections to your data</li>
-          </ul>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Users size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Your Rights</h2>
+        </div>
+        <p class="text-muted-foreground mb-3">You have the right to:</p>
+        <ul class="space-y-2 text-muted-foreground">
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Access your personal data</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Request deletion of your data</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Opt-out of the service at any time</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-primary mt-1">•</span>
+            <span>Request corrections to your data</span>
+          </li>
+        </ul>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Contact Us</CardTitle>
-        </CardHeader>
-        <CardContent class="text-sm text-muted-foreground">
-          <p>
-            For privacy-related inquiries or to exercise your rights, please
-            contact us through the repository or affiliated university channels.
-          </p>
-        </CardContent>
-      </Card>
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Mail size={24} />
+          </div>
+          <h2 class="text-2xl font-bold">Contact Us</h2>
+        </div>
+        <p class="text-muted-foreground leading-relaxed">
+          For privacy-related inquiries or to exercise your rights, please contact us through
+          the repository or affiliated university channels.
+        </p>
+      </section>
     </div>
 
-    <div class="mt-8 text-center">
-      <a href="/" class="text-sm font-medium text-primary hover:underline">
-        ← Back to Home
+    <div class="mt-12 text-center">
+      <a href="/">
+        <Button variant="outline" size="lg">
+          <ArrowLeft size={20} />
+          Back to Home
+        </Button>
       </a>
     </div>
   </div>

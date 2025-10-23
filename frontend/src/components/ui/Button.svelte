@@ -18,21 +18,21 @@
   export let type: "button" | "submit" | "reset" = "button";
 
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg active:scale-95",
     destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg active:scale-95",
     outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
+      "border-2 border-primary bg-background hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-md active:scale-95",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md active:scale-95",
+    ghost: "hover:bg-accent hover:text-accent-foreground active:scale-95",
     link: "text-primary underline-offset-4 hover:underline",
   };
 
   const sizes = {
-    default: "h-10 px-4 py-2",
-    sm: "h-9 rounded-lg px-3 text-xs",
-    lg: "h-11 rounded-lg px-8",
-    icon: "h-10 w-10",
+    default: "h-11 px-6 py-2 text-base",
+    sm: "h-9 px-4 text-sm",
+    lg: "h-13 px-8 text-lg",
+    icon: "h-11 w-11",
   };
 </script>
 
@@ -40,7 +40,7 @@
   {type}
   {disabled}
   class={cn(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     variants[variant],
     sizes[size],
     className
