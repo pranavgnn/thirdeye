@@ -3,7 +3,7 @@ from fastapi.responses import PlainTextResponse
 from middleware import verify_webhook_token
 from utils.whatsapp import handle_image
 
-router = APIRouter()
+router = APIRouter(prefix="/webhook/whatsapp")
 
 
 @router.get("", response_class=PlainTextResponse)

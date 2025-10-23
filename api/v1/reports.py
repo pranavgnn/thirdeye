@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 from nodes.supabase_store import get_supabase_client
 
-router = APIRouter()
+router = APIRouter(prefix="/reports")
 
 
 @router.get("")
