@@ -1,5 +1,7 @@
 <script lang="ts">
   import { cn } from "@/lib/utils";
+  import type { HTMLButtonAttributes } from "svelte/elements";
+  import type { Snippet } from "svelte";
 
   type Variant =
     | "default"
@@ -10,20 +12,34 @@
     | "link";
   type Size = "default" | "sm" | "lg" | "icon";
 
-  let className: string | undefined = undefined;
-  export { className as class };
-  export let variant: Variant = "default";
-  export let size: Size = "default";
-  export let disabled: boolean = false;
-  export let type: "button" | "submit" | "reset" = "button";
+  interface Props extends HTMLButtonAttributes {
+    class?: string;
+    variant?: Variant;
+    size?: Size;
+    disabled?: boolean;
+    type?: "button" | "submit" | "reset";
+    children?: Snippet;
+  }
+
+  let {
+    class: className,
+    variant = "default",
+    size = "default",
+    disabled = false,
+    type = "button",
+    children,
+    ...restProps
+  }: Props = $props();
 
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg active:scale-95",
+    default:
+      "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg active:scale-95",
     destructive:
       "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg active:scale-95",
     outline:
       "border-2 border-primary bg-background hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-md active:scale-95",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md active:scale-95",
+    secondary:
+      "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md active:scale-95",
     ghost: "hover:bg-accent hover:text-accent-foreground active:scale-95",
     link: "text-primary underline-offset-4 hover:underline",
   };
@@ -45,7 +61,7 @@
     sizes[size],
     className
   )}
-  on:click
+  {...restProps}
 >
-  <slot />
+  {@render children?.()}
 </button>
