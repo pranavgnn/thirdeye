@@ -11,7 +11,6 @@ from config import VISION_MODEL
 from utils.lazy import structured_chat_model
 
 class ImageAnalysisResult(BaseModel):
-
     vehicle_detected: bool = Field(description="Indicates if a vehicle is detected in the image.")
     is_violation: Optional[bool] = Field(description="Indicates if a traffic violation is present in the image, if vehicle is present.")
     license_plate: Optional[str] = Field(description="The license plate number of the vehicle involved in the violation in all caps and no spaces, if detectable.")
@@ -30,14 +29,8 @@ def analyse_image(image_url: str):
     message = {
         "role": "user",
         "content": [
-            {
-                "type": "text", 
-                "text": "Analyze the following image for traffic violations."
-            },
-            {
-                "type": "image_url",
-                "image_url": image_url,
-            },
+            {"type": "text", "text": "Analyze the following image for traffic violations."},
+            {"type": "image_url", "image_url": image_url},
         ],
     }
     return get_structured_model().invoke([message])
@@ -45,5 +38,4 @@ def analyse_image(image_url: str):
 
 if __name__ == "__main__":
     analysis_result = analyse_image("https://images.hindustantimes.com/auto/img/2025/03/18/1600x900/Delhi_Traffic_Violation_1713763214287_1742269490008.jpg")
-
     print(analysis_result.model_dump_json(indent=2))

@@ -31,10 +31,7 @@ def summarize(report_result: ReportResult) -> str:
     elif not report_result.analysis.license_plate:
         manual_verification = "REQUIRES MANUAL VERIFICATION (License plate not detected)"
     
-    response = chat_model(SUMMARY_MODEL).invoke([
-        {
-            "role": "system",
-            "content": """You are an AI assistant summarizing traffic violation reports for an Indian traffic enforcement system.
+    system_instructions = """You are an AI assistant summarizing traffic violation reports for an Indian traffic enforcement system.
 
 You receive:
 - analysis: Vision model output describing what was seen in the image (vehicle, license plate, possible violations, confidence, etc.)
@@ -61,10 +58,8 @@ Guidelines:
 - Do not add emojis, speculation, or extra commentary.
 
 Keep the response under 150 words."""
-        },
-        {
-            "role": "user",
-            "content": f"""You are given the following structured input for summarization:
+    
+    user_message = f"""You are given the following structured input for summarization:
 
 Image Analysis Result:
 {data["analysis"].model_dump_json(indent=2)}
@@ -76,7 +71,10 @@ Report Status: {report_status}
 Manual Verification Flag: {manual_verification if manual_verification else "Not required"}
 
 Compose a short, human-readable message summarizing what was detected in the image, the violation outcome, whether the report was recorded, and manual verification status. Follow the style described in the system prompt."""
-        }
+    
+    response = chat_model(SUMMARY_MODEL).invoke([
+        {"role": "system", "content": system_instructions},
+        {"role": "user", "content": user_message}
     ])
 
     return response.content

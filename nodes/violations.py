@@ -170,7 +170,6 @@ def get_vector_store() -> InMemoryVectorStore:
 
 
 class ViolationsResult(BaseModel):
-
     id: int = Field(description="Unique identifier for the violation.")
     name: str = Field(description="Name of the traffic violation.")
     category: str = Field(description="Category of the traffic violation.")
@@ -179,7 +178,6 @@ class ViolationsResult(BaseModel):
     section: str = Field(description="Legal section under which the violation falls.")
 
 class ValidationResult(BaseModel):
-
     is_valid: bool = Field(description="Indicates if the given violation is applicable for the given scenario.")
 
 def get_validator():
