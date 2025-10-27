@@ -28,11 +28,18 @@
         analysis via WhatsApp
       </p>
       <div class="flex gap-4 justify-center">
-        <Button size="lg">
-          <MessageCircle size={20} />
-          Start Analyzing
-        </Button>
-        <Button variant="outline" size="lg">Learn More</Button>
+        <a href="/upload">
+          <Button size="lg">
+            <Scan size={20} />
+            Upload & Analyze
+          </Button>
+        </a>
+        <a href="/reports">
+          <Button variant="outline" size="lg">
+            <FileCheck size={20} />
+            View Reports
+          </Button>
+        </a>
       </div>
     </div>
 
@@ -161,10 +168,10 @@
 
     <div class="text-center space-x-6">
       <a
-        href="/privacy"
+        href="/upload"
         class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
       >
-        Privacy Policy
+        Upload & Analyze
       </a>
       <span class="text-muted-foreground">•</span>
       <a
@@ -172,6 +179,13 @@
         class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
       >
         View Reports
+      </a>
+      <span class="text-muted-foreground">•</span>
+      <a
+        href="/privacy"
+        class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+      >
+        Privacy Policy
       </a>
     </div>
   </div>

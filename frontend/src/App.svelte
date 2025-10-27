@@ -3,6 +3,7 @@
   import Home from "@/routes/Home.svelte";
   import Privacy from "@/routes/Privacy.svelte";
   import Reports from "@/routes/Reports.svelte";
+  import Upload from "@/routes/Upload.svelte";
   import NotFound from "@/routes/NotFound.svelte";
   import ThemeToggle from "@/components/ThemeToggle.svelte";
 
@@ -44,6 +45,8 @@
   <Privacy />
 {:else if currentPath === "/reports"}
   <Reports />
+{:else if currentPath === "/upload"}
+  <Upload />
 {:else}
   <NotFound />
 {/if}
