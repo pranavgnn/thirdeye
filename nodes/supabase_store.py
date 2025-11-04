@@ -52,11 +52,15 @@ def store_report(data: dict) -> ReportResult:
     try:
         supabase = get_supabase_client()
         
+        # Try with new schema first (includes new fields)
         report_data = {
             "reporter_phone": reporter_phone,
             "reported_timestamp": datetime.utcnow().isoformat(),
             "reported_image": reported_image,
             "license_plate": analysis.license_plate,
+            "license_plate_confidence": analysis.license_plate_confidence,
+            "is_india_location": analysis.is_india_location,
+            "location_confidence": analysis.location_confidence,
             "violations": [v.model_dump() for v in violations],
             "confidence_score": analysis.confidence_score,
             "short_description": analysis.short_description,
@@ -65,7 +69,24 @@ def store_report(data: dict) -> ReportResult:
             "title": analysis.title or "Traffic Violation Report"
         }
         
-        result = supabase.table("violation_reports").insert(report_data).execute()
+        try:
+            result = supabase.table("violation_reports").insert(report_data).execute()
+        except Exception as insert_error:
+            # If insert fails (likely due to missing columns), try with old schema
+            # Remove the new fields and retry
+            report_data_old = {
+                "reporter_phone": reporter_phone,
+                "reported_timestamp": datetime.utcnow().isoformat(),
+                "reported_image": reported_image,
+                "license_plate": analysis.license_plate,
+                "violations": [v.model_dump() for v in violations],
+                "confidence_score": analysis.confidence_score,
+                "short_description": analysis.short_description,
+                "is_violation": analysis.is_violation,
+                "detailed_description": analysis.detailed_description,
+                "title": analysis.title or "Traffic Violation Report"
+            }
+            result = supabase.table("violation_reports").insert(report_data_old).execute()
         
         report_id = result.data[0].get("id") if result.data else None
         
