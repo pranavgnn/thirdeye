@@ -5,6 +5,8 @@ from fastapi.responses import FileResponse, JSONResponse
 from dotenv import load_dotenv
 from api.v1.health import router as health_router
 from api.v1.reports import router as reports_router
+from api.v1.analyze import router as analyze_router
+from api.v1.admin import router as admin_router
 from api.v1.webhook.whatsapp import router as webhook_router
 
 load_dotenv()
@@ -14,6 +16,8 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
 api_router.include_router(reports_router)
+api_router.include_router(analyze_router)
+api_router.include_router(admin_router)
 api_router.include_router(webhook_router)
 app.include_router(api_router)
 

@@ -52,6 +52,23 @@ def store_report(data: dict) -> ReportResult:
     try:
         supabase = get_supabase_client()
         
+        # Determine if manual verification is needed
+        # Flag for manual verification if:
+        # - License plate confidence is low (<0.7) but plate is present
+        # - Location confidence is low (<0.7)
+        # - Overall confidence is low (<0.6)
+        # - Is a violation but no violations detected
+        needs_manual_verification = False
+        if analysis.is_violation:
+            if (analysis.license_plate and analysis.license_plate_confidence < 0.7):
+                needs_manual_verification = True
+            elif analysis.location_confidence < 0.7:
+                needs_manual_verification = True
+            elif analysis.confidence_score < 0.6:
+                needs_manual_verification = True
+            elif not violations:
+                needs_manual_verification = True
+        
         # Try with new schema first (includes new fields)
         report_data = {
             "reporter_phone": reporter_phone,
@@ -66,7 +83,8 @@ def store_report(data: dict) -> ReportResult:
             "short_description": analysis.short_description,
             "is_violation": analysis.is_violation,
             "detailed_description": analysis.detailed_description,
-            "title": analysis.title or "Traffic Violation Report"
+            "title": analysis.title or "Traffic Violation Report",
+            "needs_manual_verification": needs_manual_verification
         }
         
         try:

@@ -29,66 +29,54 @@ def get_structured_model():
 
 
 def analyse_image(image_url: str):
-    system_prompt = """You are an expert AI traffic violation detection system specialized in analyzing images from Indian roads and traffic scenarios.
+     system_prompt = """You are an expert AI traffic violation detection system specialized in analyzing images from Indian roads and traffic scenarios.
 
 Your task is to:
-1. **Detect Vehicles**: Identify if any vehicles are present in the image.
-2. **Identify Location**: Determine if the image is from India by looking for:
-   - Indian license plate formats (e.g., MH-02-XX-1234, DL-1C-1234, KA-01-AB-1234)
-   - Indian vehicle models (Maruti, Tata, Mahindra, Bajaj, Hero, TVS, etc.)
-   - Hindi or regional language text on signs, boards, or vehicles
-   - Indian road infrastructure (specific road signs, barriers, markings)
-   - Environmental cues (architecture, vegetation, street furniture common in India)
-   - Be VERY confident (>99%) before marking as NOT India. When in doubt, assume it could be India.
+1. Detect Vehicles: Identify if any vehicles are present in the image.
+2. Identify Location (India or not):
+    - Use plate formats, vehicle models, language on signs, and road features.
+    - Be VERY confident (>99%) before marking as NOT India. When in doubt, do NOT mark as not India.
+3. Detect License Plates:
+    - Report license_plate only if HIGH confidence (>0.7). Otherwise set it to null and license_plate_confidence accordingly.
+    - Output license plate in format XX00XX0000 (no spaces/hyphens).
+4. Identify Traffic Violations:
+    - Output violations as an array of ZERO OR MORE names chosen EXACTLY from this allowed list (use exact spelling and casing):
+      [
+         "Helmet Missing",
+         "Triple Riding",
+         "Seatbelt Not Worn",
+         "Red Light Violation",
+         "Wrong Side Driving (Lane Violation)",
+         "No Number Plate",
+         "Illegal Parking",
+         "Vehicle Overloading",
+         "Obstructive Parking",
+         "Tampered Number Plate",
+         "Improper Lane Discipline",
+         "Driving Without Rearview Mirrors",
+         "Unauthorized Modifications"
+      ]
+    - Only include a name if visible evidence supports it. If unsure, leave the array empty.
+5. Provide Descriptions:
+    - short_description: concise 1–2 sentences.
+    - detailed_description: factual details; do NOT include low-confidence plate numbers.
+6. Confidence:
+    - Provide overall confidence conservatively. Reflect uncertainty.
 
-3. **Detect License Plates**: 
-   - Look for vehicle registration plates carefully
-   - Indian plates typically have: State Code (2 letters) - District Code (2 digits) - Series (1-2 letters) - Number (4 digits)
-   - ONLY report license plate text if you can read it with HIGH confidence (>70%)
-   - If the plate is blurry, partially obscured, or unclear, set license_plate to None and license_plate_confidence low
-   - Extract text in format: XX00XX0000 (no spaces or hyphens)
+Return data that conforms strictly to the response schema fields.
+"""
 
-4. **Identify Traffic Violations**: Analyze the scene for violations such as:
-   - Not wearing helmet (two-wheelers)
-   - Not wearing seatbelt (four-wheelers)
-   - Using mobile phone while driving
-   - Wrong-side driving / Wrong direction
-   - Jumping red light / Signal violation
-   - Triple riding on two-wheelers
-   - Overloading
-   - Parking violations
-   - Lane violations
-   - Speed limit violations (if visible context suggests speeding)
-   - No rear-view mirrors
-   - Riding on footpath/pavement
-   - Vehicle modifications
-
-5. **Provide Accurate Descriptions**:
-   - Short description: 1-2 sentences summarizing the scene
-   - Detailed description: Comprehensive analysis including vehicle type, location in frame, specific violation details, environmental context
-   - Be specific and factual
-   - Do NOT mention license plate numbers in descriptions if confidence is low (<0.7)
-   - Focus on observable facts, not assumptions
-
-6. **Assess Confidence**:
-   - Overall confidence should reflect certainty about the entire analysis
-   - Consider image quality, visibility, angle, and clarity
-   - Be conservative with confidence scores
-   - Factor in lighting conditions, distance, and obstructions
-
-Remember: Accuracy is critical. When uncertain, reflect that in your confidence scores."""
-
-    message = [
-        {"role": "system", "content": system_prompt},
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": "Analyze the following image for traffic violations according to Indian traffic rules and regulations."},
-                {"type": "image_url", "image_url": image_url},
-            ],
-        }
-    ]
-    return get_structured_model().invoke(message)
+     message = [
+          {"role": "system", "content": system_prompt},
+          {
+                "role": "user",
+                "content": [
+                     {"type": "text", "text": "Analyze the following image for traffic violations according to Indian traffic rules and use the allowed violation names exactly as listed."},
+                     {"type": "image_url", "image_url": image_url},
+                ],
+          },
+     ]
+     return get_structured_model().invoke(message)
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ import json
 from .vision import ImageAnalysisResult
 from config import GENAI_EMBEDDINGS_MODEL, VIOLATION_VALIDATOR_MODEL
 from utils.lazy import structured_chat_model
+from typing import List
 
 try:
     from dotenv import load_dotenv
@@ -196,21 +197,79 @@ def validate_violation(violation_data: ViolationsResult, analysis_result: ImageA
         }
     ]).is_valid
      
+def _allowed_violation_names() -> List[str]:
+    return [v["name"] for v in DETECTABLE_VIOLATIONS]
+
+
+_SYNONYM_MAP = {
+    "helmet": "Helmet Missing",
+    "no helmet": "Helmet Missing",
+    "triple": "Triple Riding",
+    "three people": "Triple Riding",
+    "seatbelt": "Seatbelt Not Worn",
+    "seat belt": "Seatbelt Not Worn",
+    "red light": "Red Light Violation",
+    "signal": "Red Light Violation",
+    "wrong side": "Wrong Side Driving (Lane Violation)",
+    "wrong way": "Wrong Side Driving (Lane Violation)",
+    "no number plate": "No Number Plate",
+    "missing plate": "No Number Plate",
+    "illegal parking": "Illegal Parking",
+    "no parking": "Illegal Parking",
+    "obstructive parking": "Obstructive Parking",
+    "overload": "Vehicle Overloading",
+    "overloading": "Vehicle Overloading",
+    "lane": "Improper Lane Discipline",
+    "rearview": "Driving Without Rearview Mirrors",
+    "mirror": "Driving Without Rearview Mirrors",
+    "modification": "Unauthorized Modifications",
+}
+
+
+def _candidates_from_text(text: str) -> List[str]:
+    t = (text or "").lower()
+    chosen = set()
+    for name in _allowed_violation_names():
+        if name.lower() in t:
+            chosen.add(name)
+    for key, mapped in _SYNONYM_MAP.items():
+        if key in t:
+            chosen.add(mapped)
+    return list(chosen)
+
 
 def match_violations(analysis_result: ImageAnalysisResult) -> list[ViolationsResult]:
-    if not analysis_result.vehicle_detected or not analysis_result.is_violation or analysis_result.violations is None:
+    if not analysis_result.vehicle_detected or not analysis_result.is_violation:
         return []
-    
-    matched_violations = []
-    
-    store = get_vector_store()
-    for violation in analysis_result.violations:
-        for doc in store.similarity_search(violation, k=2):
-            violation_data = ViolationsResult.model_validate(json.loads(doc.metadata["violation_data"]))
 
-            if violation_data not in matched_violations and validate_violation(violation_data, analysis_result):
-                matched_violations.append(ViolationsResult.model_validate(violation_data))
-    
+    # Prefer model-provided violations; if missing, derive from descriptions
+    violation_names: List[str] = []
+    if analysis_result.violations:
+        violation_names = list(analysis_result.violations)
+    else:
+        combined = f"{analysis_result.short_description or ''} \n {analysis_result.detailed_description or ''}"
+        violation_names = _candidates_from_text(combined)
+
+    if not violation_names:
+        return []
+
+    matched_violations: list[ViolationsResult] = []
+    store = get_vector_store()
+    for violation in violation_names:
+        try:
+            docs = store.similarity_search(violation, k=2)
+        except Exception:
+            docs = []
+        for doc in docs:
+            violation_data = ViolationsResult.model_validate(json.loads(doc.metadata["violation_data"]))
+            try:
+                is_valid = validate_violation(violation_data, analysis_result)
+            except Exception:
+                # If validator fails (e.g., network/model), fall back to heuristic accept
+                is_valid = True
+            if is_valid and all(v.name != violation_data.name for v in matched_violations):
+                matched_violations.append(violation_data)
+
     return matched_violations
 
 

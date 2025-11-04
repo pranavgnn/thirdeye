@@ -10,11 +10,24 @@
     Shield,
     Lock,
     AlertCircle,
+    ShieldCheck,
   } from "lucide-svelte";
+
+  const whatsappNumber = "15551856117"; // +1 (555) 185-6117
+  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 </script>
 
 <main class="min-h-screen">
   <div class="container max-w-5xl mx-auto py-16 px-4">
+    <!-- Admin Login Button in Header -->
+    <div class="flex justify-end mb-8">
+      <a href="/admin">
+        <Button variant="ghost" size="sm">
+          <ShieldCheck size={18} />
+          Admin Login
+        </Button>
+      </a>
+    </div>
     <div class="text-center mb-16">
       <div
         class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
@@ -27,12 +40,19 @@
         Detect and report traffic violations instantly using AI-powered image
         analysis via WhatsApp
       </p>
-      <div class="flex gap-4 justify-center">
-        <Button size="lg">
-          <MessageCircle size={20} />
-          Start Analyzing
-        </Button>
-        <Button variant="outline" size="lg">Learn More</Button>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="/upload">
+          <Button size="lg">
+            <Scan size={20} />
+            Upload & Analyze
+          </Button>
+        </a>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          <Button size="lg" variant="outline">
+            <MessageCircle size={20} />
+            Chat on WhatsApp
+          </Button>
+        </a>
       </div>
     </div>
 
@@ -161,6 +181,13 @@
 
     <div class="text-center space-x-6">
       <a
+        href="/upload"
+        class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+      >
+        Upload & Analyze
+      </a>
+      <span class="text-muted-foreground">•</span>
+      <a
         href="/privacy"
         class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
       >
@@ -168,10 +195,10 @@
       </a>
       <span class="text-muted-foreground">•</span>
       <a
-        href="/reports"
+        href="/admin"
         class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
       >
-        View Reports
+        Admin
       </a>
     </div>
   </div>
